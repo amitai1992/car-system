@@ -1,0 +1,39 @@
+
+<form class="my-form" action="/">
+    <label for="viacleTypes">Choose a car type:</label>
+    <select name="carTypes" id="viacleTypes">
+        <option value="any">Any</option>
+        <option *ngFor="let type of selectedTypes" value={{type.typeName}}>{{type.typeName}}</option>
+    </select>
+    <label for="fourOnFour">Search by gear</label>
+    <select name="4X4" id="fourOnFour">
+        <option value="all">All</option>
+        <option value="4X4">4X4</option>
+        <option value="not 4X4">not 4X4</option>
+    </select>
+    <label for="LicencePlate">Search by Licence plate</label>
+    <input type="text" id="LicencePlate">
+</form>
+
+<table class="entry-table">
+    <tr>
+        <th class="tdCell">License Plate</th>
+        <th class="tdCell">Viacle Type</th>
+        <th class="tdCell">4X4</th>
+        <th class="tdCell">Engine Capacity</th>
+        <th class="tdCell">Deliverd To Employee</th>
+        <th class="tdCell"></th>
+    </tr>
+    <tr *ngFor="let car of cars">
+        <td class="tdCell">{{car.licencePlate}}</td>
+        <td class="tdCell">{{types[car.viacleType]}}</td>
+        <td class="tdCell">{{!!+car.fourOnFour}}</td>
+        <td class="tdCell">{{car.engineCapacity}}</td>
+        <td class="tdCell">{{car.deliveredToEmployee}}</td>
+        <td class="tdCell">
+            <button type="button" class="btn btn-outline-danger btn-sm" (click)="deleteCarHandler(car)">delete
+                car</button>
+        </td>
+
+    </tr>
+</table>

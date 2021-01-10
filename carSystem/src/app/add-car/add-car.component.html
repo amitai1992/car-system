@@ -1,0 +1,33 @@
+<div class="div-car-detailes">
+    <h1 class="add-headline">Add a new viacle</h1>
+    <form #car="ngForm" (ngSubmit)="onClickSubmit(car.value)" ngNativeValidate>
+        <input [(ngModel)]="car.licencePlate" name="licencePlate" class="detail-element" type="text" placeholder="Licence Plate"  required>
+        <label for="">Viacle type: </label>
+        <select  [(ngModel)]="car.viacleType" name="viacleType" class="detail-element" id="" required>
+            <option *ngFor="let type of types" value="{{type.typeNum}}">{{type.typeName}}</option>
+        </select>
+        <br><br>
+
+        <label for="">Gear type</label>
+        <select name="fourOnFour" [(ngModel)]="car.fourOnFour"  class="detail-element"  id="" required>
+            <option value={{true}}>4X4</option>
+            <option value={{false}}>not 4X4</option>
+        </select>
+        <input [(ngModel)]="car.engineCapacity" name="engineCapacity" class="detail-element" type="number" placeholder="Engin capacity">
+        <br><br>
+
+        <input [(ngModel)]="car.manufactoryYear" name="manufactoryYear" class="detail-element" type="number" placeholder="Manufactory year" required>
+        <label for="">Employee</label>
+        <select [(ngModel)]="car.deliveredToEmployee" name="deliveredToEmployee" class="detail-element" id="" >
+            <option value="none">Not delivered</option>
+            <option *ngFor="let num of employeeNums" value={{num}}>{{num}}</option>
+        </select>
+        <br><br>
+
+        <input [(ngModel)]="car.treatmentDate" name="treatmentDate" class="detail-element" type="date" placeholder="Treatment date" required>
+        <input [(ngModel)]="car.comments"  name="comments" class="detail-element" type="text" placeholder="comments">
+        <br><br>
+        <button type="submit" class="btn btn-success">submit</button>
+    </form>
+
+</div>

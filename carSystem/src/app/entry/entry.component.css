@@ -1,0 +1,30 @@
+.entry-headline{
+    font-family: 'Domine', serif;
+    padding-left: 20px;
+    padding-top: 20px;
+    background-image: -webkit-linear-gradient(65deg, #f0f4fafa 10%, #75ffff 80%);
+    color: #505253;
+}
+
+.entry-table {
+    border: 1px solid rgb(156, 152, 152);
+    border-radius: 25px;
+    margin: 100px auto auto auto;
+    font-family: 'Domine', serif;
+}
+
+.tdCell {
+    text-align: center;
+    border-bottom: 1px solid rgb(156, 152, 152);;
+    color: rgb(95, 94, 91);
+    margin: 5px 0 5px 0;
+    background-color: #cefdff;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.my-form {
+    margin-left: 320px;
+    position: relative;
+    top: 80px;
+}

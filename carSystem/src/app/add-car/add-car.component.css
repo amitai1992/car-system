@@ -1,0 +1,27 @@
+input{
+    width: 160px;
+}
+
+.div-car-detailes {
+    margin:70px auto;
+    width: 50%;
+    padding: 20px;
+    text-align: center;
+    border: 0.5px groove rgb(236, 233, 233);
+    font-family: 'Domine', serif;
+    border-radius: 25px;
+}
+
+.add-headline{
+    font-family: 'Domine', serif;
+    margin-bottom: 20px;
+    color: #505253;
+}
+
+.detail-element {
+    margin-right: 60px;
+    margin-left: 5px;  
+    border: 0.5px groove rgb(236, 233, 233);
+    border-radius: 5px;
+    
+}
