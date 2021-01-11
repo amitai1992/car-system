@@ -4,7 +4,7 @@ const port = 3000;
 const app = express();
 const mysql = require("mysql");
 
-
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 let con = mysql.createConnection({
@@ -61,6 +61,34 @@ app.get('/api/carId', (req, res) => {
         let carIdres = result[0].id;
         res.send(String(carIdres));
     });
+});
+
+app.get('/api/licencePlate', (req, res) => {
+    const plate = req.param("plate");
+    const query = 'SELECT licencePlate FROM cars WHERE licencePlate ="' + plate + '"';
+    con.query(query, (err, result, fields) => {
+        if (err) throw err;
+        let plateRes = "true";
+        if (typeof result !== 'undefined' && result.length > 0) {
+            plateRes = "";
+        }
+        res.send(plateRes);
+    })
+});
+
+app.post('/api/addCar', (req, res) => {
+    const car = req.body;
+    const headQuery = "INSERT INTO cars VALUES (";
+    const middleQuery = car.id + ", " + "'" +car.licencePlate+"'" + ", " + car.viacleType
+    + ", " + Boolean(car.fourOnFour) + ", " + car.engineCapacity + ", " + car.manufactoryYear
+    + ", " + car.comments + ", " + car.deliveredToEmployee + ", " + "'" + car.treatmentDate
+    + "'" + ", " + "'" + car.editDate + "'" + ")";
+    const query = headQuery + middleQuery;
+    con.query(query, (err, result, fields) => {
+        if(err) throw err;
+        res.send({answer : "success"});  
+    })
+    
 })
 
 app.get('/', (req, res) => {
