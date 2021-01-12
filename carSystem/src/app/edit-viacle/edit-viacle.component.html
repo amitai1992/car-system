@@ -1,32 +1,71 @@
 <div class="div-car-detailes">
     <h1 class="add-headline">edit viacle: {{viacle.getId()}}</h1>
     <form #car="ngForm" (ngSubmit)="onClickSave()" ngNativeValidate>
-        <input [(ngModel)]="data.licencePlate" name="licencePlate" [pattern]="licencePlatePattern" (ngModelChange)="viacle.setLicencePlate(data.licencePlate)" class="detail-element" type="text" required>
-        <label for="">Viacle type: </label>
-        <select  [(ngModel)]="data.viacleType" name="viacleType" class="detail-element" (ngModelChange)="viacle.setViaclType(data.viacleType)"  required>
-            <option *ngFor="let type of types" value="{{type.typeNum}}">{{type.typeName}}</option>
-        </select>
-        <br><br>
+        <div class="row div-row">
+            <div class="col-sm">
+                <label for="">licence plate</label>
+                <input [(ngModel)]="data.licencePlate" name="licencePlate" [pattern]="licencePlatePattern"
+                    (ngModelChange)="viacle.setLicencePlate(data.licencePlate)" class="detail-element" type="text"
+                    required>
+            </div>
+            <div class="col-sm">
+                <label for="">Viacle type: </label>
+                <select [(ngModel)]="data.viacleType" name="viacleType" class="detail-element viacletype-select"
+                    (ngModelChange)="viacle.setViaclType(data.viacleType)" required>
+                    <option *ngFor="let type of types" value="{{type.typeNum}}">{{type.typeName}}</option>
+                </select>
+            </div>
+        </div>
 
-        <label for="">Gear type</label>
-        <select name="fourOnFour" [(ngModel)]="data.fourOnFour" (ngModelChange)="viacle.setGear(data.fourOnFour)"  class="detail-element"  required>
-            <option value="{{1}}">4X4</option>
-            <option value="{{0}}">not 4X4</option>
-        </select>
-        <input [(ngModel)]="data.engineCapacity" (ngModelChange)="viacle.setEngin(data.engineCapacity)" name="engineCapacity" class="detail-element" type="number" placeholder="Engin capacity" [min]="800">
-        <br><br>
 
-        <input [(ngModel)]="data.manufactoryYear" (ngModelChange)="viacle.setManufactoryYear(data.manufactoryYear)" name="manufactoryYear" class="detail-element" type="number" placeholder="Manufactory year" required [min]="1960" [max]="2021">
-        <label for="">Employee</label>
-        <select name="deliveredToEmployee" [(ngModel)]="data.deliveredToEmployee" (ngModelChange)="viacle.setEmployee(data.deliveredToEmployee)" class="detail-element"  required>
-            <option value="none">Not delivered</option>
-            <option *ngFor="let num of employeeNums" value={{num}}>{{num}}</option>
-        </select>
-        <br><br>
+        <div class="row div-row">
+            <div class="col-sm">
+                <label class="gear-lable" for="">Gear type</label>
+                <select name="fourOnFour" [(ngModel)]="data.fourOnFour"
+                    (ngModelChange)="viacle.setGear(data.fourOnFour)" class="detail-element gear-select" required>
+                    <option value="{{1}}">4X4</option>
+                    <option value="{{0}}">not 4X4</option>
+                </select>
+            </div>
+            <div class="col-sm">
+                <label class="engin-type-lable" for="">enigin:</label>
+                <input [(ngModel)]="data.engineCapacity" (ngModelChange)="viacle.setEngin(data.engineCapacity)"
+                    name="engineCapacity" class="detail-element engin-type-lable" type="number"
+                    placeholder="Engin capacity" [min]="800">
+            </div>
+        </div>
 
-        <input [(ngModel)]="data.treatmentDate" (ngModelChange)="viacle.setTreatmentDate(data.treatmentDate)" name="treatmentDate" class="detail-element" type="date" placeholder="Treatment date" required [min] = "today">
-        <input [(ngModel)]="data.comments" (ngModelChange)="viacle.setEditDate(data.comments)"  name="comments" class="detail-element" type="text" placeholder="comments">
-        <br><br>
+        <div class="row div-row">
+            <div class="col-sm">
+                <label class="manufactory-year-lable" for="">manufactory year</label>
+                <input [(ngModel)]="data.manufactoryYear"
+                    (ngModelChange)="viacle.setManufactoryYear(data.manufactoryYear)" name="manufactoryYear"
+                    class="detail-element manufactory-year-select" type="number" required [min]="1960" [max]="2021">
+            </div>
+            <div class="col-sm">
+                <label class="employee-lable" for="">Employee</label>
+                <select name="deliveredToEmployee" [(ngModel)]="data.deliveredToEmployee"
+                    (ngModelChange)="viacle.setEmployee(data.deliveredToEmployee)" class="detail-element" required>
+                    <option value="none">Not delivered</option>
+                    <option *ngFor="let num of employeeNums" value={{num}}>{{num}}</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row div-row">
+            <div class="col-sm">
+                <label class="treatment-label " for="">treatment: </label>
+                <input [(ngModel)]="data.treatmentDate" (ngModelChange)="viacle.setTreatmentDate(data.treatmentDate)"
+                    name="treatmentDate" class="detail-element treatment-input" type="date" placeholder="Treatment date"
+                    required [min]="today">
+            </div>
+
+            <div class="col-sm">
+                <input [(ngModel)]="data.comments" (ngModelChange)="viacle.setEditDate(data.comments)" name="comments"
+                    class="detail-element comments-input" type="text" placeholder="comments">
+            </div>
+        </div>
+
         <button type="submit" class="btn btn-success">submit</button>
     </form>
 

@@ -4,7 +4,7 @@ import { EntryComponent } from './entry/entry.component';
 import { CommonModule } from '@angular/common';
 import { AddCarComponent } from './add-car/add-car.component';
 import {EditViacleComponent} from './edit-viacle/edit-viacle.component';
-import {Car} from './car';
+import {Viacle} from './car';
 
 const routes: Routes = [
   { path: 'home', component: EntryComponent },

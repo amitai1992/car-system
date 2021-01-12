@@ -1,7 +1,7 @@
-import { CarService } from './car.service';
+import { viacleService } from './car.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-export class Car {
+export class Viacle {
     private id: number
     private licencePlate: string
     private viacleType: number
@@ -15,7 +15,8 @@ export class Car {
 
     destroy$: Subject<boolean> = new Subject<boolean>();
 
-    constructor(private carService: CarService,
+    // constructor get as an iput an object with the data and a viacleService 
+    constructor(private viacleService: viacleService,
         data: {
             id: number, licencePlate: string, viacleType: number,
             fourOnFour: boolean,
@@ -97,10 +98,10 @@ export class Car {
 
 
     //////////crud operations/////////////////////
-    // check if the licence plate alredy exist in database, if it is return true els return false
 
+    // check first if the licence plate exist, if not insert the car to database
     addCarToDataBase() {
-        this.carService.getLicencePlate(this.licencePlate, this.id).pipe(takeUntil(this.destroy$))
+        this.viacleService.getLicencePlate(this.licencePlate, this.id).pipe(takeUntil(this.destroy$))
             .subscribe((resPlate: string) => {
                 if (resPlate) {
                     this.insertCar();
@@ -111,8 +112,9 @@ export class Car {
             });
     }
 
+    //check first if the licence plate exist, if not or the id of the viacle found=this update this
     updateCar() {
-        this.carService.getLicencePlate(this.licencePlate, this.id).pipe(takeUntil(this.destroy$))
+        this.viacleService.getLicencePlate(this.licencePlate, this.id).pipe(takeUntil(this.destroy$))
             .subscribe((resPlate: string) => {
                 if (resPlate) {
                     this.update();
@@ -123,7 +125,8 @@ export class Car {
             })
     }
 
-    //help function that generate the relevent data to json object and pass it to the server
+
+    //help function that generate the relevent data to json object
     buildObject() {
         let data = {
             id: this.getId(),
@@ -139,16 +142,18 @@ export class Car {
         }
         return data;
     }
+
     // insert the car to the data base after licencne plate check
     private insertCar() {
-        this.carService.addCar(this.buildObject()).pipe(takeUntil(this.destroy$))
+        this.viacleService.addCar(this.buildObject()).pipe(takeUntil(this.destroy$))
             .subscribe((res) => {
                 alert(res.answer);
             });
     }
 
+    // update this after licence check
     private update() {
-        this.carService.updateCar(this.buildObject()).pipe(takeUntil(this.destroy$))
+        this.viacleService.updateCar(this.buildObject()).pipe(takeUntil(this.destroy$))
             .subscribe((res) => {
                 alert(res.answer);
             });
@@ -156,9 +161,10 @@ export class Car {
 
     //delete car from data base
     deleteCar() {
-        this.carService.deleteCar(this.getId()).pipe(takeUntil(this.destroy$)).subscribe();
+        this.viacleService.deleteCar(this.getId()).pipe(takeUntil(this.destroy$)).subscribe();
     }
-    
+
+    // format the date to dd-mm-yy
     formatDate(date: Date) {
         let d = new Date(date),
             month = '' + (d.getMonth() + 1),

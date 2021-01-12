@@ -1,32 +1,30 @@
 <form class="my-form" action="/">
-    <label for="">search by </label>
-    <select name="searchType" id=""  (change)="searchBy($event.target.value)">search by
+    <label class="search-form-element" for="">search by </label>
+    <select class="search-form-element" name="searchType" id=""  (change)="searchBy($event.target.value)">search by
         <option *ngFor="let prop of searchProp"  value={{prop}}>
             {{prop}}
         </option>
     </select>
-    <span *ngIf="selectedProp ==='type'">
+    <span  *ngIf="selectedProp ==='viacleType'">
         <label for="viacleTypes">Choose a car type:</label>
-        <select name="carTypes" id="viacleTypes" [(ngModel)] = "test">
-            <option value="any">choose type</option>
+        <select name="carTypes" id="viacleTypes" [(ngModel)] = "searchValue.viacleType" required>
             <option *ngFor="let type of selectedTypes" value={{type.typeName}}>{{type.typeName}}</option>
         </select>
-        <button (click)="searchClickHandler()">search</button>
+        <button class="search-button btn btn-success btn-sm" (click)="searchClickHandler()">search</button>
     </span>
 
-    <span *ngIf="selectedProp ==='gear'">
+    <span  *ngIf="selectedProp ==='fourOnFour'">
         <label for="fourOnFour">Search by gear</label>
-        <select name="4X4" id="fourOnFour" [(ngModel)] = "test">
-            <option value="all">All</option>
+        <select name="4X4" id="fourOnFour" [(ngModel)] = "searchValue.fourOnFour">
             <option value="4X4">4X4</option>
             <option value="not 4X4">not 4X4</option>
         </select>
-        <button (click)="searchClickHandler()">search</button>
+        <button class="search-button btn btn-success btn-sm" (click)="searchClickHandler()">search</button>
     </span>
 
-    <span *ngIf="selectedProp ==='licence plate'">
-        <input [(ngModel)] = "test" name="licence" type="text" id="LicencePlate" placeholder="enter licence plate" [(ngModel)] = "test">
-        <button (click)="searchClickHandler()">search</button>
+    <span  *ngIf="selectedProp ==='licencePlate'">
+        <input [(ngModel)] = "searchValue.licencePlate" name="licence" type="text" id="LicencePlate" placeholder="enter licence plate" [(ngModel)] = "test">
+        <button class="search-button btn btn-success btn-sm" (click)="searchClickHandler()">search</button>
     </span>
 </form>
 
@@ -46,7 +44,7 @@
         <td class="tdCell">{{car.getEnginCapacity()}}</td>
         <td class="tdCell">{{car.getDeliveredToEmployee()}}</td>
         <td class="tdCell">
-            <button class="btn btn-outline-danger btn-sm" (click)="editClickHandler(car)">Edit viacle</button>
+            <button class="btn btn-outline-warning btn-sm" (click)="editClickHandler(car)">Edit viacle</button>
         </td>
         <td class="tdCell">
             <button type="button" class="btn btn-outline-danger btn-sm" (click)="deleteCarHandler(car)">delete

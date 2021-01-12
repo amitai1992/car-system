@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Car } from '../car';
-import { CarService } from '../car.service';
+import { Viacle } from '../car';
+import { viacleService } from '../car.service';
 import { Type } from '../carType';
 import { SystemService } from '../system.service';
 import { takeUntil } from 'rxjs/operators';
@@ -14,18 +14,18 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./edit-viacle.component.css']
 })
 export class EditViacleComponent implements OnInit {
-  viacle: Car;
-  licencePlatePattern = "\\d\\d-\\d\\d\\d-\\d\\d";
+  viacle: Viacle;
+  licencePlatePattern = "\\d\\d-\\d\\d\\d-\\d\\d"; // pattern for licence plate
   types: Type[]; // types of the viacles
   employeeNums: number[]; // array of employeeNum from the database
   destroy$: Subject<boolean> = new Subject<boolean>();
   today = new Date().toISOString().slice(0, 10) // today date
   data: any; // data to display on the screen
 
-  constructor(private router: Router, private carService: CarService, private systemService: SystemService) {
+  constructor(private router: Router, private carService: viacleService, private systemService: SystemService) {
     const navigation = this.router.getCurrentNavigation();
     const state = navigation.extras.state as any;
-    this.viacle = new Car(this.carService, state);
+    this.viacle = new Viacle(this.carService, state);
     this.data = this.viacle.buildObject();
 
   }
@@ -45,7 +45,9 @@ export class EditViacleComponent implements OnInit {
       })
   }
 
+  // update car function onClick
   onClickSave() {
+    if(this.data.deliveredToEmployee === "none") this.viacle.setEmployee(null); //if delivered to employee was not delivered
     this.viacle.updateCar();
   }
 

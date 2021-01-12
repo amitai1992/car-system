@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Car } from '../car';
+import { Viacle } from '../car';
 import { Type } from '../carType';
-import { CarService } from '../car.service';
+import { viacleService } from '../car.service';
 import { SystemService } from '../system.service'
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class AddCarComponent implements OnInit {
 
-  constructor(private carService: CarService, private systemService: SystemService) { }
+  constructor(private carService: viacleService, private systemService: SystemService) { }
 
   types: Type[]; // types of the viacles
 
@@ -22,7 +22,7 @@ export class AddCarComponent implements OnInit {
   licencePlatePattern = "\\d\\d-\\d\\d\\d-\\d\\d"; // patten for the licencePlate
   employeeNums: number[]; // array of employeeNum from the database
   destroy$: Subject<boolean> = new Subject<boolean>();
-  today = new Date().toISOString().slice(0, 10) // today date
+  today = new Date().toISOString().slice(0, 10) // today date in a dd-mm/yy format
   id: number; // id for the new car
 
   // get the types database from the server
@@ -44,12 +44,12 @@ export class AddCarComponent implements OnInit {
   getMaxId() {
     this.systemService.getCarId().pipe(takeUntil(this.destroy$))
       .subscribe((id: string) => {
-        this.id = parseInt(id) + 1;
+        this.id = parseInt(id) + 1; // id of the new viacle will be the new max id
       })
   }
 
 
-  // edit and fill missing detailes before creating a new car elemet
+  // edit and fill missing detailes before creating a new viacle elemet
   private fillCarDetailes(data) {
     data["id"] = this.id;
     data["editDate"] = this.today;
@@ -61,17 +61,17 @@ export class AddCarComponent implements OnInit {
   }
 
   // check if the licence plate alredy exist in database, if it is return true els return false
-  private checkLicencePlateExist(data) {
+  private addVicacleAfterCheck(data) {
     this.fillCarDetailes(data);
-    let car = new Car(this.carService, data);
-    car.addCarToDataBase();
+    let viacle = new Viacle(this.carService, data);
+    viacle.addCarToDataBase(); // add the viacle to database
     this.id += 1;
   }
 
 
   // click handler function for adding the car
   onClickSubmit(data) {
-    this.checkLicencePlateExist(data)
+    this.addVicacleAfterCheck(data)
   }
 
   ngOnDestroy() {

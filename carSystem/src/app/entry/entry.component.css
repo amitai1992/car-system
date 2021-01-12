@@ -10,8 +10,10 @@
     /* border: 1px solid rgb(156, 152, 152); */
     margin: 100px auto auto auto;
     font-family: 'Domine', serif;
-    background-color: #cefdff;
+    background-color: #f5f4f4;
 }
+
+
 
 .tdCell {
     text-align: center;
@@ -27,4 +29,20 @@
     margin-left: 320px;
     position: relative;
     top: 80px;
+    font-family: 'Domine', serif;
+    color: rgb(95, 94, 91);
+}
+
+.search-form-element {
+    margin-right: 10px;
+}
+
+.search-button {
+    margin-left: 10px;
+}
+
+@media (max-width: 850px) {
+    .my-form {
+        margin: auto;
+    }
 }

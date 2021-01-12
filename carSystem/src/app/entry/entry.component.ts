@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CarService } from '../car.service';
-import {SystemService} from '../system.service'
-import { Car } from '../car'
+import { viacleService } from '../car.service';
+import { SystemService } from '../system.service'
+import { Viacle } from '../car'
 import { Type } from '../carType';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -15,21 +15,25 @@ import { Router, NavigationExtras } from '@angular/router';
 })
 export class EntryComponent implements OnInit {
 
-  constructor(private carService: CarService, private systemService: SystemService,private router: Router) { }
+  constructor(private carService: viacleService, private systemService: SystemService, private router: Router) { }
 
-  cars: Car[] = [];
+  cars: Viacle[] = []; // the list of the viacles
   types = {}; // key: value order types
   selectedTypes: Type[]; // Type array for the select tag
   destroy$: Subject<boolean> = new Subject<boolean>();
-  searchProp = ["any","licence plate", "gear", "type"];
-  selectedProp = "any";
-  test = "";
+  searchProp = ["any", "licencePlate", "fourOnFour", "viacleType"]; // array of the search props
+  selectedProp = "any"; // the selected property search, initilize to any at first
+  searchValue = { // values of the search type
+    licencePlate: "", // initilize to empty string
+    fourOnFour: "4X4",
+    viacleType: "motorcycle"
+  }
 
-  // this function use the get cars function of carService to get the car list from the server
+  // this function use the get viacles function of systemService to get the viacle list from the server
   getCarsList() {
     this.systemService.getCars().pipe(takeUntil(this.destroy$)).subscribe((cars: any) => {
       cars.forEach(object => {
-        let car = new Car(this.carService,object);
+        let car = new Viacle(this.carService, object);
         this.cars.push(car);
       });
     });
@@ -46,27 +50,60 @@ export class EntryComponent implements OnInit {
     });
   }
 
+  // get list of the cars depending on the search, get the property chosen and the value of it
+  getFilterCars(prop, value) {
+    this.systemService.filterCarList(prop, value).pipe(takeUntil(this.destroy$))
+      .subscribe((cars: any) => {
+        this.cars = [];
+        cars.forEach(object => {
+          let car = new Viacle(this.carService, object);
+          this.cars.push(car);
+        });
+      })
+  }
+
   //delete car on click
-  deleteCarHandler(car: Car): void {
+  deleteCarHandler(car: Viacle): void {
     if (confirm("Are you sure you want to delete this car? ")) {
       this.cars = this.cars.filter(c => c.getId() !== car.getId());
       car.deleteCar();
     }
   }
 
-  editClickHandler(viacle:Car) {
+  // go to the edit component
+  editClickHandler(viacle: Viacle) {
     let data = viacle.buildObject();
-    const navigationExtras: NavigationExtras = {state: data};
-      this.router.navigate(['edit'], navigationExtras);
+    const navigationExtras: NavigationExtras = { state: data };
+    this.router.navigate(['edit'], navigationExtras);
   }
 
+  // search click function
   searchClickHandler() {
-    console.log(this.test);
-    ;
+    let value: any = "";
+    if (this.selectedProp === "viacleType") {
+      for (const prop in this.types) {
+        if (this.types[prop] === this.searchValue.viacleType) {
+          value = prop;
+          break;
+        }
+      }
+    }
+    else if (this.selectedProp === "fourOnFour") {
+      value = true;
+      this.searchValue.fourOnFour === "4X4" ? value = true : value = false;
+    }
+    else {
+      value = "'" + this.searchValue.licencePlate + "'"; // the input for licence in a query is by''
+    }
+    this.getFilterCars(this.selectedProp, value); // search the viacles
   }
- 
-  searchBy(prop:string) {
-    this.selectedProp = prop; 
+
+  // change the value of selected prop depending on type of search
+  searchBy(prop: string) {
+    if (prop === "any" && prop != this.selectedProp) {
+      this.getCarsList();
+    }
+    this.selectedProp = prop;
   }
 
   ngOnDestroy() {

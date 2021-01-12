@@ -1,22 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Car } from './car';
+import { Viacle } from './car';
 import { Type } from './carType';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CarService {
+export class viacleService {
 
   constructor(private http: HttpClient) { }
 
   rootURL = '/api';
 
   //delete request from the server to delete a car in the database
-  deleteCar(carNum: number): Observable<Car> {
+  deleteCar(carNum: number): Observable<Viacle> {
     const deleteUrl = this.rootURL + '/delete?carNum=' + carNum;
-    const res = this.http.delete<Car>(deleteUrl);
+    const res = this.http.delete<Viacle>(deleteUrl);
     return res;
   }
 

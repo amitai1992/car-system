@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Car } from './car';
+import { Viacle } from './car';
 import { Type } from './carType';
 
 @Injectable({
   providedIn: 'root'
 })
+// system service use for api requests directly from the components
 export class SystemService {
 
   constructor(private http: HttpClient) { }
@@ -14,8 +15,8 @@ export class SystemService {
   rootURL = '/api';
 
   //http request function at url '/api/cars' for car list
-  getCars(): Observable<Car[]> {
-    const res = this.http.get<Car[]>(this.rootURL + '/cars');
+  getCars(): Observable<Viacle[]> {
+    const res = this.http.get<Viacle[]>(this.rootURL + '/cars');
     return res;
   }
 
@@ -37,8 +38,9 @@ export class SystemService {
     return res;
   }
 
-  filterCarList(type:string, value): Observable<Car[]> {
-    const res = this.http.get<Car[]>(this.rootURL + '/filter?type=' + type + '&value=' + value);
+  // select query acording the user search in entry component 
+  filterCarList(type:string, value): Observable<Viacle[]> {
+    const res = this.http.get<Viacle[]>(this.rootURL + '/filter?type=' + type + '&value=' + value);
     return res;
   }
 }
