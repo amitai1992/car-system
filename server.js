@@ -6,6 +6,8 @@ const mysql = require("mysql");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(express.static(process.cwd() + "/carSystem/dist/carSystem/"));
+
 let con = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -32,7 +34,7 @@ app.get('/api/filter', (req, res) => {
     con.query(query, (err, result, fields) => {
         if (err) throw err;
         res.json(result);
-    }) 
+    })
 })
 
 // get type list from data base
@@ -113,16 +115,20 @@ app.post('/api/updateCar', (req, res) => {
     const car = req.body;
     const headQuery = "UPDATE cars SET ";
     const middleQuery = buildQueryValues(car, "set");
-    const cond = "WHERE id = " + car.id; 
+    const cond = "WHERE id = " + car.id;
     const query = headQuery + middleQuery + cond;
     con.query(query, (err, result, fieldes) => {
         if (err) throw err
-        res.send({answer: "edit succesfull"});
+        res.send({ answer: "edit succesfull" });
     });
 });
 
 app.get('/', (req, res) => {
-    res.send('App Works !!!!');
+    res.sendFile(process.cwd() + "/carSystem/dist/carSystem/index.html")
+});
+
+app.get('/home', (req, res) => {
+    res.sendFile(process.cwd() + "/carSystem/dist/carSystem/index.html")
 });
 
 // help function for building a query for insert and set
