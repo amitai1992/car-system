@@ -7,12 +7,14 @@ import { EntryComponent } from './entry/entry.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AddCarComponent } from './add-car/add-car.component';
+import { EditViacleComponent } from './edit-viacle/edit-viacle.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EntryComponent,
-    AddCarComponent
+    AddCarComponent,
+    EditViacleComponent
   ],
   imports: [
     BrowserModule,

@@ -5,6 +5,7 @@ import { Car } from '../car'
 import { Type } from '../carType';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { Router, NavigationExtras } from '@angular/router';
 
 
 @Component({
@@ -14,13 +15,16 @@ import { Subject } from 'rxjs';
 })
 export class EntryComponent implements OnInit {
 
-  constructor(private carService: CarService, private systemService: SystemService) { }
+  constructor(private carService: CarService, private systemService: SystemService,private router: Router) { }
 
   cars: Car[] = [];
   types = {}; // key: value order types
   selectedTypes: Type[]; // Type array for the select tag
   destroy$: Subject<boolean> = new Subject<boolean>();
-  
+  searchProp = ["any","licence plate", "gear", "type"];
+  selectedProp = "any";
+  test = "";
+
   // this function use the get cars function of carService to get the car list from the server
   getCarsList() {
     this.systemService.getCars().pipe(takeUntil(this.destroy$)).subscribe((cars: any) => {
@@ -39,7 +43,7 @@ export class EntryComponent implements OnInit {
         this.types[type.typeNum] = type.typeName;
       })
 
-    })
+    });
   }
 
   //delete car on click
@@ -50,7 +54,20 @@ export class EntryComponent implements OnInit {
     }
   }
 
+  editClickHandler(viacle:Car) {
+    let data = viacle.buildObject();
+    const navigationExtras: NavigationExtras = {state: data};
+      this.router.navigate(['edit'], navigationExtras);
+  }
+
+  searchClickHandler() {
+    console.log(this.test);
+    ;
+  }
  
+  searchBy(prop:string) {
+    this.selectedProp = prop; 
+  }
 
   ngOnDestroy() {
     this.destroy$.next(true);

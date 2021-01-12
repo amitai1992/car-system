@@ -68,6 +68,7 @@ export class Car {
     }
     public setLicencePlate(plate: string) {
         this.licencePlate = plate;
+
     }
     public setViaclType(type: number) {
         this.viacleType = type;
@@ -94,11 +95,12 @@ export class Car {
         this.editDate = date;
     }
 
+
     //////////crud operations/////////////////////
     // check if the licence plate alredy exist in database, if it is return true els return false
 
     addCarToDataBase() {
-        this.carService.getLicencePlate(this.licencePlate).pipe(takeUntil(this.destroy$))
+        this.carService.getLicencePlate(this.licencePlate, this.id).pipe(takeUntil(this.destroy$))
             .subscribe((resPlate: string) => {
                 if (resPlate) {
                     this.insertCar();
@@ -109,8 +111,20 @@ export class Car {
             });
     }
 
+    updateCar() {
+        this.carService.getLicencePlate(this.licencePlate, this.id).pipe(takeUntil(this.destroy$))
+            .subscribe((resPlate: string) => {
+                if (resPlate) {
+                    this.update();
+                }
+                else {
+                    alert("licence alredy belong to another viacle");
+                }
+            })
+    }
+
     //help function that generate the relevent data to json object and pass it to the server
-    private buildObject() {
+    buildObject() {
         let data = {
             id: this.getId(),
             licencePlate: this.getLicencePlate(),
@@ -120,8 +134,8 @@ export class Car {
             manufactoryYear: this.getManufactoryYear(),
             comments: this.getComments(),
             deliveredToEmployee: this.getDeliveredToEmployee(),
-            treatmentDate: this.getTreatmentDate(),
-            editDate: this.getEditDate()
+            treatmentDate: this.formatDate(this.getTreatmentDate()),
+            editDate: this.formatDate(this.getEditDate())
         }
         return data;
     }
@@ -133,12 +147,31 @@ export class Car {
             });
     }
 
+    private update() {
+        this.carService.updateCar(this.buildObject()).pipe(takeUntil(this.destroy$))
+            .subscribe((res) => {
+                alert(res.answer);
+            });
+    }
+
     //delete car from data base
     deleteCar() {
         this.carService.deleteCar(this.getId()).pipe(takeUntil(this.destroy$)).subscribe();
     }
+    
+    formatDate(date: Date) {
+        let d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
 
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
 
+        return [year, month, day].join('-');
+    }
 
 
 }

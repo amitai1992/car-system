@@ -36,4 +36,9 @@ export class SystemService {
     const res = this.http.get<string>(this.rootURL + '/carId');
     return res;
   }
+
+  filterCarList(type:string, value): Observable<Car[]> {
+    const res = this.http.get<Car[]>(this.rootURL + '/filter?type=' + type + '&value=' + value);
+    return res;
+  }
 }

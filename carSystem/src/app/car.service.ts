@@ -20,13 +20,18 @@ export class CarService {
     return res;
   }
 
-  getLicencePlate(plate: string): Observable<string> {
-    const res = this.http.get<string>(this.rootURL + '/licencePlate?plate=' + plate);
+  getLicencePlate(plate: string, id:number): Observable<string> {
+    const res = this.http.get<string>(this.rootURL + '/licencePlate?plate=' + plate + '&id=' + id);
     return res;
   }
 
   addCar(car): Observable<any> {
     const res = this.http.post<any>(this.rootURL + '/addCar', car);
+    return res;
+  }
+
+  updateCar(car): Observable <any> {
+    const res = this.http.post<any>(this.rootURL + '/updateCar', car);
     return res;
   }
 

@@ -1,18 +1,33 @@
-
 <form class="my-form" action="/">
-    <label for="viacleTypes">Choose a car type:</label>
-    <select name="carTypes" id="viacleTypes">
-        <option value="any">Any</option>
-        <option *ngFor="let type of selectedTypes" value={{type.typeName}}>{{type.typeName}}</option>
+    <label for="">search by </label>
+    <select name="searchType" id=""  (change)="searchBy($event.target.value)">search by
+        <option *ngFor="let prop of searchProp"  value={{prop}}>
+            {{prop}}
+        </option>
     </select>
-    <label for="fourOnFour">Search by gear</label>
-    <select name="4X4" id="fourOnFour">
-        <option value="all">All</option>
-        <option value="4X4">4X4</option>
-        <option value="not 4X4">not 4X4</option>
-    </select>
-    <label for="LicencePlate">Search by Licence plate</label>
-    <input type="text" id="LicencePlate">
+    <span *ngIf="selectedProp ==='type'">
+        <label for="viacleTypes">Choose a car type:</label>
+        <select name="carTypes" id="viacleTypes" [(ngModel)] = "test">
+            <option value="any">choose type</option>
+            <option *ngFor="let type of selectedTypes" value={{type.typeName}}>{{type.typeName}}</option>
+        </select>
+        <button (click)="searchClickHandler()">search</button>
+    </span>
+
+    <span *ngIf="selectedProp ==='gear'">
+        <label for="fourOnFour">Search by gear</label>
+        <select name="4X4" id="fourOnFour" [(ngModel)] = "test">
+            <option value="all">All</option>
+            <option value="4X4">4X4</option>
+            <option value="not 4X4">not 4X4</option>
+        </select>
+        <button (click)="searchClickHandler()">search</button>
+    </span>
+
+    <span *ngIf="selectedProp ==='licence plate'">
+        <input [(ngModel)] = "test" name="licence" type="text" id="LicencePlate" placeholder="enter licence plate" [(ngModel)] = "test">
+        <button (click)="searchClickHandler()">search</button>
+    </span>
 </form>
 
 <table class="entry-table">
@@ -30,6 +45,9 @@
         <td class="tdCell">{{!!+car.getFourOnFour()}}</td>
         <td class="tdCell">{{car.getEnginCapacity()}}</td>
         <td class="tdCell">{{car.getDeliveredToEmployee()}}</td>
+        <td class="tdCell">
+            <button class="btn btn-outline-danger btn-sm" (click)="editClickHandler(car)">Edit viacle</button>
+        </td>
         <td class="tdCell">
             <button type="button" class="btn btn-outline-danger btn-sm" (click)="deleteCarHandler(car)">delete
                 car</button>

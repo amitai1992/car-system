@@ -7,18 +7,18 @@
 }
 
 .entry-table {
-    border: 1px solid rgb(156, 152, 152);
-    border-radius: 25px;
+    /* border: 1px solid rgb(156, 152, 152); */
     margin: 100px auto auto auto;
     font-family: 'Domine', serif;
+    background-color: #cefdff;
 }
 
 .tdCell {
     text-align: center;
-    border-bottom: 1px solid rgb(156, 152, 152);;
+    /* border-bottom: 1px solid rgb(156, 152, 152);; */
     color: rgb(95, 94, 91);
     margin: 5px 0 5px 0;
-    background-color: #cefdff;
+    /* background-color: #cefdff; */
     padding-left: 10px;
     padding-right: 10px;
 }
