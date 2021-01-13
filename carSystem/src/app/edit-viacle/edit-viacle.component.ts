@@ -27,8 +27,10 @@ export class EditViacleComponent implements OnInit {
     const state = navigation.extras.state as any;
     this.viacle = new Viacle(this.carService, state);
     this.data = this.viacle.buildObject();
+    this.viacle.setEditDateString(this.today);
 
   }
+  
 
   // get the types database from the server
   getCarTypes() {

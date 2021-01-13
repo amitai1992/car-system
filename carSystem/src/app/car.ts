@@ -95,6 +95,9 @@ export class Viacle {
     public setEditDate(date: Date) {
         this.editDate = date;
     }
+    public setEditDateString(date:string) {
+        this.editDate = new Date(date);
+    }
 
 
     //////////crud operations/////////////////////
