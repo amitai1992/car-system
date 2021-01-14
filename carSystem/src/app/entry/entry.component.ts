@@ -101,6 +101,7 @@ export class EntryComponent implements OnInit {
   // change the value of selected prop depending on type of search
   searchBy(prop: string) {
     if (prop === "any" && prop != this.selectedProp) {
+      this.cars = [];
       this.getCarsList();
     }
     this.selectedProp = prop;
