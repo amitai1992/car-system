@@ -26,6 +26,8 @@
         <input [(ngModel)] = "searchValue.licencePlate" name="licence" type="text" id="LicencePlate" placeholder="enter licence plate">
         <button class="search-button btn btn-success btn-sm" (click)="searchClickHandler()">search</button>
     </span>
+
+    <button class="search-button btn btn-sm btn-success" (click)="export()">download as excel</button>
 </form>
 
 <table class="entry-table">

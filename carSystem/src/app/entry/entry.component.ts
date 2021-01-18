@@ -6,6 +6,7 @@ import { Type } from '../carType';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Router, NavigationExtras } from '@angular/router';
+import { ExportExcelService } from '../export-excel.service';
 
 
 @Component({
@@ -15,7 +16,11 @@ import { Router, NavigationExtras } from '@angular/router';
 })
 export class EntryComponent implements OnInit {
 
-  constructor(private viacleService: viacleService, private systemService: SystemService, private router: Router) { }
+  constructor(
+    private viacleService: viacleService,
+    private systemService: SystemService,
+    private router: Router, 
+    private exportExcelService: ExportExcelService) { }
 
   cars: Viacle[] = []; // the list of the viacles
   types = {}; // key: value order types
@@ -105,6 +110,20 @@ export class EntryComponent implements OnInit {
       this.getCarsList();
     }
     this.selectedProp = prop;
+  }
+
+ private createDataForExcel() {
+    let data = [];
+    this.cars.forEach(car => {
+      let vehicleData = car.exportDataForList();
+      data.push(vehicleData);
+    });
+    return data;
+  }
+
+  export() {
+    let data = this.createDataForExcel();
+    this.exportExcelService.exportExcel(data, 'vehicles');
   }
 
   ngOnDestroy() {

@@ -95,7 +95,7 @@ export class Viacle {
     public setEditDate(date: Date) {
         this.editDate = date;
     }
-    public setEditDateString(date:string) {
+    public setEditDateString(date: string) {
         this.editDate = new Date(date);
     }
 
@@ -180,6 +180,16 @@ export class Viacle {
             day = '0' + day;
 
         return [year, month, day].join('-');
+    }
+
+    exportDataForList() : {} {
+        let vehicleData = {
+            licencePlat: this.licencePlate, type: this.viacleType,
+            fourOnFour:this.fourOnFour, engineCapacity:this.engineCapacity,
+            deliveredToEmployee: this.deliveredToEmployee
+        }
+        return vehicleData;
+
     }
 
 
