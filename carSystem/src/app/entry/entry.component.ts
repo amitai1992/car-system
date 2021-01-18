@@ -15,7 +15,7 @@ import { Router, NavigationExtras } from '@angular/router';
 })
 export class EntryComponent implements OnInit {
 
-  constructor(private carService: viacleService, private systemService: SystemService, private router: Router) { }
+  constructor(private viacleService: viacleService, private systemService: SystemService, private router: Router) { }
 
   cars: Viacle[] = []; // the list of the viacles
   types = {}; // key: value order types
@@ -33,7 +33,7 @@ export class EntryComponent implements OnInit {
   getCarsList() {
     this.systemService.getCars().pipe(takeUntil(this.destroy$)).subscribe((cars: any) => {
       cars.forEach(object => {
-        let car = new Viacle(this.carService, object);
+        let car = new Viacle(this.viacleService, object);
         this.cars.push(car);
       });
     });
@@ -56,7 +56,7 @@ export class EntryComponent implements OnInit {
       .subscribe((cars: any) => {
         this.cars = [];
         cars.forEach(object => {
-          let car = new Viacle(this.carService, object);
+          let car = new Viacle(this.viacleService, object);
           this.cars.push(car);
         });
       })
