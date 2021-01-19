@@ -182,6 +182,7 @@ export class Viacle {
         return [year, month, day].join('-');
     }
 
+    // xport the data that show at the entry page, this function needed for exporting excel file
     exportDataForList() : {} {
         let vehicleData = {
             licencePlat: this.licencePlate, type: this.viacleType,

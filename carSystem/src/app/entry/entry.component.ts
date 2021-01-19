@@ -112,6 +112,7 @@ export class EntryComponent implements OnInit {
     this.selectedProp = prop;
   }
 
+  // create data array of the vehicle list
  private createDataForExcel() {
     let data = [];
     this.cars.forEach(car => {
@@ -121,6 +122,7 @@ export class EntryComponent implements OnInit {
     return data;
   }
 
+  // export a excel file on click
   export() {
     let data = this.createDataForExcel();
     this.exportExcelService.exportExcel(data, 'vehicles');
